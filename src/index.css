@@ -1,4 +1,5 @@
 :root {
+	font-family: var(--font);
 	--font: 'Open Sans', sans-serif;
 	--primary-color: #fe724c;
 	--primary-hover-color: #d15836;
@@ -9,5 +10,5 @@
 }
 
 sidebar {
-	font-family: 'Open Sans', sans-serif;
+	font-family: var(--font);
 }
