@@ -2,7 +2,6 @@
 	position: relative;
 	min-height: 165px;
 	border-radius: 19px;
-	object-fit: cover;
 }
 
 .card {
