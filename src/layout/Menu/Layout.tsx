@@ -1,13 +1,24 @@
 import cn from 'classnames';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
+import { AppDispath, RootState } from '../../store/store';
+import { getProfile, userActions } from '../../store/user.slice';
 import styles from './Layout.module.css';
 
 export function Layout() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch<AppDispath>();
+	const profile = useSelector((s: RootState) => s.user.profile);
+	const items = useSelector((s: RootState) => s.cart.items);
+
+	useEffect(() => {
+		dispatch(getProfile());
+	}, [dispatch]);
 
 	const logout = () => {
-		localStorage.removeItem('jwt');
+		dispatch(userActions.logout());
 		navigate('/auth/login');
 	};
 
@@ -20,8 +31,8 @@ export function Layout() {
 						alt="Изображение аватара"
 						className={styles['ava']}
 					/>
-					<div className={styles['name']}>Роман Баженов</div>
-					<div className={styles['email']}>roman@bachenov.com</div>
+					<div className={styles['name']}>{profile?.name}</div>
+					<div className={styles['email']}>{profile?.email}</div>
 				</div>
 				<div className={styles['menu']}>
 					<NavLink
@@ -46,6 +57,7 @@ export function Layout() {
 						<img src="/cart.svg" alt="Иконка корзины" />
 						Корзина
 					</NavLink>
+					{items.reduce((acc, item) => (acc += item.count), 0)}
 				</div>
 				<Button className={styles['exit']} onClick={logout}>
 					<img src="/power.svg" alt="Иконка выхода" />

@@ -1,5 +1,6 @@
 import { lazy, StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { RequireAuth } from './helpers/RequireAuth';
 import './index.css';
@@ -10,6 +11,7 @@ import { Error as ErrorPage } from './pages/Error/Error';
 import { Login } from './pages/Login/Login';
 import { ProductCardProps } from './pages/Product/Product';
 import { Register } from './pages/Register/Register';
+import { store } from './store/store';
 
 const Menu = lazy(() => import('./pages/Menu/Menu'));
 
@@ -63,6 +65,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<Provider store={store}>
+			<RouterProvider router={router} />
+		</Provider>
 	</StrictMode>
 );
